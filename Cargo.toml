@@ -8,4 +8,4 @@ authors = ["Tryton Van Meer <code@trytonvanmeer.dev>"]
 
 [dependencies]
 anyhow = "1"
-clap = "4"
+clap = {version = "4", features = ["derive"]}
