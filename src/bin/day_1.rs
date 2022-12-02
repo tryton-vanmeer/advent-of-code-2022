@@ -1,13 +1,13 @@
-use advent_of_code_2022::{read_lines, Args};
+use advent_of_code_2022::Args;
 
 use clap::Parser;
 
-fn get_elves(filepath: String) -> anyhow::Result<Vec<i32>> {
+fn get_elves(filename: String) -> anyhow::Result<Vec<i32>> {
     let mut elf_calories: Vec<i32> = Vec::new();
     let mut foods: Vec<i32> = Vec::new();
 
-    if let Ok(lines) = read_lines(filepath) {
-        for line in lines.flatten() {
+    if let Ok(lines) = std::fs::read_to_string(filename) {
+        for line in lines.split('\n') {
             if line.is_empty() {
                 elf_calories.push(foods.iter().sum());
                 foods.clear();
@@ -34,7 +34,10 @@ fn main() -> anyhow::Result<()> {
         elves.pop().unwrap(),
     ];
 
-    println!("top three elves carrying the most calories: {}", top_three.iter().sum::<i32>());
+    println!(
+        "top three elves carrying the most calories: {}",
+        top_three.iter().sum::<i32>()
+    );
 
     Ok(())
 }
