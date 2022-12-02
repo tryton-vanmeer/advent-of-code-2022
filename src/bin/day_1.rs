@@ -19,7 +19,17 @@ fn main() -> anyhow::Result<()> {
         }
     }
 
-    println!("{}", elf_calories.iter().max().unwrap());
+    elf_calories.sort_unstable();
+
+    println!("elf carrying most calories: {}", elf_calories.last().unwrap());
+
+    let top_three = vec![
+        elf_calories.pop().unwrap(),
+        elf_calories.pop().unwrap(),
+        elf_calories.pop().unwrap(),
+    ];
+
+    println!("top three elves carrying the most calories: {}", top_three.iter().sum::<i32>());
 
     Ok(())
 }
