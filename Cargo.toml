@@ -1,0 +1,11 @@
+[package]
+name = "advent_of_code_2022"
+version = "0.1.0"
+edition = "2021"
+readme = "README.md"
+license = "GPL-3"
+authors = ["Tryton Van Meer <code@trytonvanmeer.dev>"]
+
+[dependencies]
+anyhow = "1"
+clap = "4"
