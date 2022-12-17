@@ -4,14 +4,12 @@ fn get_elves() -> anyhow::Result<Vec<i32>> {
     let mut elf_calories: Vec<i32> = Vec::new();
     let mut foods: Vec<i32> = Vec::new();
 
-    if let Ok(lines) = std::fs::read_to_string(get_input_file()) {
-        for line in lines.split('\n') {
-            if line.is_empty() {
-                elf_calories.push(foods.iter().sum());
-                foods.clear();
-            } else {
-                foods.push(line.parse::<i32>()?);
-            }
+    for line in get_input_file()? {
+        if line.is_empty() {
+            elf_calories.push(foods.iter().sum());
+            foods.clear();
+        } else {
+            foods.push(line.parse::<i32>()?);
         }
     }
 
