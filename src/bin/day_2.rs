@@ -1,5 +1,3 @@
-use advent_of_code_2022::get_input_file;
-
 #[derive(Debug, PartialEq)]
 enum Hand {
     Rock,
@@ -55,12 +53,10 @@ fn calculate_round_score(opponent: Hand, you: Hand) -> u32 {
 }
 
 fn main() -> anyhow::Result<()> {
+    let lines: Vec<&str> = include_str!("../../inputs/day_2.txt").lines().collect();
     let mut total_score = 0;
 
-    for line in get_input_file()? {
-        if line.is_empty() {
-            break;
-        }
+    for line in lines {
         let opponent = decode_hand(line.get(0..1).unwrap()).unwrap();
         let you = decode_hand(line.get(2..3).unwrap()).unwrap();
 
