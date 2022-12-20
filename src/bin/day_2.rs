@@ -1,8 +1,8 @@
 #[derive(Debug, PartialEq)]
 enum Hand {
-    Rock,
-    Paper,
-    Scissors,
+    Rock = 1,
+    Paper = 2,
+    Scissors = 3,
 }
 
 fn decode_hand(letter: &str) -> Option<Hand> {
