@@ -21,12 +21,15 @@ impl TryFrom<&char> for Hand {
 /// calculate your score for a round of rock-paper-scissors
 fn calculate_round_score(opponent: Hand, you: Hand) -> i32 {
     match (opponent, you) {
+        // tie
         (Hand::Rock, Hand::Rock)
         | (Hand::Paper, Hand::Paper)
         | (Hand::Scissors, Hand::Scissors) => 3 + you as i32,
+        // win
         (Hand::Rock, Hand::Paper)
         | (Hand::Paper, Hand::Scissors)
         | (Hand::Scissors, Hand::Rock) => 6 + you as i32,
+        // lose
         (Hand::Rock, Hand::Scissors)
         | (Hand::Paper, Hand::Rock)
         | (Hand::Scissors, Hand::Paper) => you as i32,
