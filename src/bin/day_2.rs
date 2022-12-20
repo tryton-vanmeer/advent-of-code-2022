@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 enum Hand {
     Rock = 1,
     Paper = 2,
@@ -20,28 +20,17 @@ impl TryFrom<&char> for Hand {
 
 // calculate your score for a round of rock-paper-scissors
 fn calculate_round_score(opponent: Hand, you: Hand) -> i32 {
-    // draw
-    if you == opponent {
-        return 3 + you as i32;
+    match (opponent, you) {
+        (Hand::Rock, Hand::Rock)
+        | (Hand::Paper, Hand::Paper)
+        | (Hand::Scissors, Hand::Scissors) => 3 + you as i32,
+        (Hand::Rock, Hand::Paper)
+        | (Hand::Paper, Hand::Scissors)
+        | (Hand::Scissors, Hand::Rock) => 6 + you as i32,
+        (Hand::Rock, Hand::Scissors)
+        | (Hand::Paper, Hand::Rock)
+        | (Hand::Scissors, Hand::Paper) => you as i32,
     }
-
-    // lose
-    if (you == Hand::Rock && opponent == Hand::Paper)
-        || (you == Hand::Paper && opponent == Hand::Scissors)
-        || (you == Hand::Scissors && opponent == Hand::Rock)
-    {
-        return you as i32;
-    }
-
-    // win
-    if (you == Hand::Rock && opponent == Hand::Scissors)
-        || (you == Hand::Paper && opponent == Hand::Rock)
-        || (you == Hand::Scissors && opponent == Hand::Paper)
-    {
-        return 6 + you as i32;
-    }
-
-    unreachable!();
 }
 
 fn main() -> anyhow::Result<()> {
