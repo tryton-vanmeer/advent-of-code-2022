@@ -19,19 +19,10 @@ impl TryFrom<&char> for Hand {
 }
 
 // calculate your score for a round of rock-paper-scissors
-fn calculate_round_score(opponent: Hand, you: Hand) -> u32 {
-    let mut score = 0;
-
-    // points for hand selected
-    match you {
-        Hand::Rock => score += 1,
-        Hand::Paper => score += 2,
-        Hand::Scissors => score += 3,
-    }
-
+fn calculate_round_score(opponent: Hand, you: Hand) -> i32 {
     // draw
     if you == opponent {
-        score += 3
+        return 3 + you as i32;
     }
 
     // lose
@@ -39,7 +30,7 @@ fn calculate_round_score(opponent: Hand, you: Hand) -> u32 {
         || (you == Hand::Paper && opponent == Hand::Scissors)
         || (you == Hand::Scissors && opponent == Hand::Rock)
     {
-        score += 0
+        return you as i32;
     }
 
     // win
@@ -47,10 +38,10 @@ fn calculate_round_score(opponent: Hand, you: Hand) -> u32 {
         || (you == Hand::Paper && opponent == Hand::Rock)
         || (you == Hand::Scissors && opponent == Hand::Paper)
     {
-        score += 6
+        return 6 + you as i32;
     }
 
-    score
+    unreachable!();
 }
 
 fn main() -> anyhow::Result<()> {
