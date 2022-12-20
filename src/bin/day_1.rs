@@ -1,10 +1,10 @@
-use advent_of_code_2022::get_input_file;
-
 fn get_elves() -> anyhow::Result<Vec<i32>> {
+    let lines: Vec<&str> = include_str!("../../inputs/day_1.txt").lines().collect();
+
     let mut elf_calories: Vec<i32> = Vec::new();
     let mut foods: Vec<i32> = Vec::new();
 
-    for line in get_input_file()? {
+    for line in lines {
         if line.is_empty() {
             elf_calories.push(foods.iter().sum());
             foods.clear();
