@@ -5,15 +5,16 @@ enum Hand {
     Scissors = 3,
 }
 
-fn decode_hand(letter: &str) -> Option<Hand> {
-    match letter {
-        "A" => Some(Hand::Rock),
-        "B" => Some(Hand::Paper),
-        "C" => Some(Hand::Scissors),
-        "X" => Some(Hand::Rock),
-        "Y" => Some(Hand::Paper),
-        "Z" => Some(Hand::Scissors),
-        _ => None,
+impl TryFrom<&char> for Hand {
+    type Error = &'static str;
+
+    fn try_from(value: &char) -> Result<Self, Self::Error> {
+        match value {
+            'A' | 'X' => Ok(Hand::Rock),
+            'B' | 'Y' => Ok(Hand::Paper),
+            'C' | 'Z' => Ok(Hand::Scissors),
+            _ => Err("Could not figure out hand from character!"),
+        }
     }
 }
 
@@ -53,12 +54,16 @@ fn calculate_round_score(opponent: Hand, you: Hand) -> u32 {
 }
 
 fn main() -> anyhow::Result<()> {
-    let lines: Vec<&str> = include_str!("../../inputs/day_2.txt").lines().collect();
+    let rounds: Vec<Vec<char>> = include_str!("../../inputs/day_2.txt")
+        .lines()
+        .map(|s| s.chars().collect())
+        .collect();
+
     let mut total_score = 0;
 
-    for line in lines {
-        let opponent = decode_hand(line.get(0..1).unwrap()).unwrap();
-        let you = decode_hand(line.get(2..3).unwrap()).unwrap();
+    for round in rounds {
+        let opponent = Hand::try_from(round.first().unwrap()).unwrap();
+        let you = Hand::try_from(round.last().unwrap()).unwrap();
 
         total_score += calculate_round_score(opponent, you);
     }
