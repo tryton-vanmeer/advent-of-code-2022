@@ -18,7 +18,7 @@ impl TryFrom<&char> for Hand {
     }
 }
 
-// calculate your score for a round of rock-paper-scissors
+/// calculate your score for a round of rock-paper-scissors
 fn calculate_round_score(opponent: Hand, you: Hand) -> i32 {
     match (opponent, you) {
         (Hand::Rock, Hand::Rock)
