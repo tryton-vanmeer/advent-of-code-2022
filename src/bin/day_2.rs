@@ -36,22 +36,34 @@ fn calculate_round_score(opponent: Hand, you: Hand) -> i32 {
     }
 }
 
-fn main() -> anyhow::Result<()> {
-    let rounds: Vec<Vec<char>> = include_str!("../../inputs/day_2.txt")
+fn part_one(input: &str) -> anyhow::Result<()> {
+    let total_score: i32 = input
         .lines()
         .map(|s| s.chars().collect())
-        .collect();
+        .map(|c: Vec<char>| {
+            vec![
+                Hand::try_from(&c[0]).unwrap(),
+                Hand::try_from(&c[2]).unwrap(),
+            ]
+        })
+        .map(|r| calculate_round_score(r[0], r[1]))
+        .sum();
 
-    let mut total_score = 0;
+    println!("part one: total score: {}", total_score);
+    Ok(())
+}
 
-    for round in rounds {
-        let opponent = Hand::try_from(round.first().unwrap()).unwrap();
-        let you = Hand::try_from(round.last().unwrap()).unwrap();
+fn part_two(input: &str) -> anyhow::Result<()> {
+    let total_score = 0;
 
-        total_score += calculate_round_score(opponent, you);
-    }
+    println!("part 2: total score: {}", total_score);
+    Ok(())
+}
 
-    println!("total score: {}", total_score);
+fn main() -> anyhow::Result<()> {
+    let input: &'static str = include_str!("../../inputs/day_2.txt");
 
+    part_one(input)?;
+    part_two(input)?;
     Ok(())
 }
