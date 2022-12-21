@@ -18,6 +18,23 @@ impl TryFrom<&char> for Hand {
     }
 }
 
+impl Hand {
+    fn part_two_from(opponent_hand: Hand, value: &char) -> Option<Hand> {
+        match (opponent_hand, value) {
+            (Hand::Rock, 'X') => Some(Hand::Scissors),
+            (Hand::Rock, 'Y') => Some(Hand::Rock),
+            (Hand::Rock, 'Z') => Some(Hand::Paper),
+            (Hand::Paper, 'X') => Some(Hand::Rock),
+            (Hand::Paper, 'Y') => Some(Hand::Paper),
+            (Hand::Paper, 'Z') => Some(Hand::Scissors),
+            (Hand::Scissors, 'X') => Some(Hand::Paper),
+            (Hand::Scissors, 'Y') => Some(Hand::Scissors),
+            (Hand::Scissors, 'Z') => Some(Hand::Rock),
+            _ => None,
+        }
+    }
+}
+
 /// calculate your score for a round of rock-paper-scissors
 fn calculate_round_score(opponent: Hand, you: Hand) -> i32 {
     match (opponent, you) {
@@ -54,7 +71,18 @@ fn part_one(input: &str) -> anyhow::Result<()> {
 }
 
 fn part_two(input: &str) -> anyhow::Result<()> {
-    let total_score = 0;
+    let total_score: i32 = input
+        .lines()
+        .map(|s| s.chars().collect())
+        .map(|c: Vec<char>| {
+            let opponent_hand = Hand::try_from(&c[0]).unwrap();
+            vec![
+                opponent_hand,
+                Hand::part_two_from(opponent_hand, &c[2]).unwrap(),
+            ]
+        })
+        .map(|r| calculate_round_score(r[0], r[1]))
+        .sum();
 
     println!("part 2: total score: {}", total_score);
     Ok(())
