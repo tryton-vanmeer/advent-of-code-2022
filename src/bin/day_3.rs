@@ -12,7 +12,6 @@ struct Rucksack {
 
 #[derive(Clone, Debug)]
 struct RucksackGroup {
-    rucksacks: Vec<Rucksack>,
     shared_item: char,
 }
 
@@ -51,8 +50,7 @@ impl RucksackGroup {
             .unwrap();
 
         RucksackGroup {
-            rucksacks: vec![first, second, third],
-            shared_item
+            shared_item,
         }
     }
 }
