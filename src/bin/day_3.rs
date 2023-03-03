@@ -38,6 +38,19 @@ impl Rucksack {
     }
 }
 
+impl RucksackGroup {
+    fn from(first: &str, second: &str, third: &str) -> RucksackGroup {
+        RucksackGroup {
+            rucksacks: vec![
+                Rucksack::from(first),
+                Rucksack::from(second),
+                Rucksack::from(third),
+            ],
+            shared_item: 'a',
+        }
+    }
+}
+
 fn main() -> anyhow::Result<()> {
     let input: &'static str = include_str!("../../inputs/day_3.txt");
     let mut rucksacks: Vec<Rucksack> = vec![];
