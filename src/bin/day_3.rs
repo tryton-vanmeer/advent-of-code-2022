@@ -49,9 +49,7 @@ impl RucksackGroup {
             .find(|&item| second.contents.contains(item) && third.contents.contains(item))
             .unwrap();
 
-        RucksackGroup {
-            shared_item,
-        }
+        RucksackGroup { shared_item }
     }
 
     fn shared_item_priority(&self) -> i16 {
@@ -94,9 +92,13 @@ fn main() -> anyhow::Result<()> {
 
     let groups = groups_from_input(input);
 
-    for group in groups {
-        println!("{}", group.shared_item_priority());
-    }
+    println!(
+        "{}",
+        groups
+            .iter()
+            .map(|group| group.shared_item_priority())
+            .sum::<i16>()
+    );
 
     Ok(())
 }
