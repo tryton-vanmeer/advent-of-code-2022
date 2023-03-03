@@ -40,13 +40,19 @@ impl Rucksack {
 
 impl RucksackGroup {
     fn from(first: &str, second: &str, third: &str) -> RucksackGroup {
+        let first = Rucksack::from(first);
+        let second = Rucksack::from(second);
+        let third = Rucksack::from(third);
+
+        let shared_item = first
+            .contents
+            .chars()
+            .find(|&item| second.contents.contains(item) && third.contents.contains(item))
+            .unwrap();
+
         RucksackGroup {
-            rucksacks: vec![
-                Rucksack::from(first),
-                Rucksack::from(second),
-                Rucksack::from(third),
-            ],
-            shared_item: 'a',
+            rucksacks: vec![first, second, third],
+            shared_item
         }
     }
 }
