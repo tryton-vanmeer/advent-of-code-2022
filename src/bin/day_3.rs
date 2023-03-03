@@ -10,6 +10,12 @@ struct Rucksack {
     shared_item: char,
 }
 
+#[derive(Clone, Debug)]
+struct RucksackGroup {
+    rucksacks: Vec<Rucksack>,
+    shared_item: char,
+}
+
 impl Rucksack {
     fn from(contents: &str) -> Rucksack {
         let compartment_size = contents.len() / 2;
