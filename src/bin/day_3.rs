@@ -51,6 +51,26 @@ impl RucksackGroup {
     }
 }
 
+fn groups_from_input(input: &str) -> Vec<RucksackGroup> {
+    let mut lines = input.lines();
+    let mut groups: Vec<RucksackGroup> = vec![];
+
+    loop {
+        let first = lines.next();
+
+        match first {
+            None => break,
+            Some(first) => groups.push(RucksackGroup::from(
+                first,
+                lines.next().unwrap(),
+                lines.next().unwrap(),
+            )),
+        }
+    }
+
+    groups
+}
+
 fn main() -> anyhow::Result<()> {
     let input: &'static str = include_str!("../../inputs/day_3.txt");
 
@@ -63,6 +83,10 @@ fn main() -> anyhow::Result<()> {
             .map(|rucksack| rucksack.shared_item_priority())
             .sum::<i16>()
     );
+
+    let groups = groups_from_input(input);
+
+    println!("{:#?}", groups);
 
     Ok(())
 }
