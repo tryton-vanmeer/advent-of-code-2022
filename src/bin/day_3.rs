@@ -53,11 +53,8 @@ impl RucksackGroup {
 
 fn main() -> anyhow::Result<()> {
     let input: &'static str = include_str!("../../inputs/day_3.txt");
-    let mut rucksacks: Vec<Rucksack> = vec![];
 
-    for line in input.lines() {
-        rucksacks.push(Rucksack::from(line));
-    }
+    let rucksacks: Vec<Rucksack> = input.lines().map(Rucksack::from).collect();
 
     println!(
         "{}",
