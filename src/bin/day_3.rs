@@ -4,6 +4,10 @@ static PRIORITIES: [char; 52] = [
     'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
 ];
 
+fn get_priority_from_char(item: char) -> i16 {
+    PRIORITIES.iter().position(|&c| c == item).unwrap() as i16 + 1
+}
+
 #[derive(Clone, Debug)]
 struct Rucksack {
     contents: String,
@@ -29,11 +33,7 @@ impl Rucksack {
     }
 
     fn shared_item_priority(&self) -> i16 {
-        PRIORITIES
-            .iter()
-            .position(|&c| c == self.shared_item)
-            .unwrap() as i16
-            + 1
+        get_priority_from_char(self.shared_item)
     }
 }
 
@@ -52,6 +52,10 @@ impl RucksackGroup {
         RucksackGroup {
             shared_item,
         }
+    }
+
+    fn shared_item_priority(&self) -> i16 {
+        get_priority_from_char(self.shared_item)
     }
 }
 
@@ -90,7 +94,9 @@ fn main() -> anyhow::Result<()> {
 
     let groups = groups_from_input(input);
 
-    println!("{:#?}", groups);
+    for group in groups {
+        println!("{}", group.shared_item_priority());
+    }
 
     Ok(())
 }
