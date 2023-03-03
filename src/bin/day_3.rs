@@ -6,6 +6,7 @@ static PRIORITIES: [char; 52] = [
 
 #[derive(Clone, Debug)]
 struct Rucksack {
+    contents: String,
     shared_item: char,
 }
 
@@ -17,6 +18,7 @@ impl Rucksack {
         let second = &contents[compartment_size..contents.len()];
 
         Rucksack {
+            contents: contents.to_string(),
             shared_item: first.chars().find(|&item| second.contains(item)).unwrap(),
         }
     }
