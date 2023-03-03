@@ -21,13 +21,12 @@ impl Rucksack {
         }
     }
 
-    fn shared_item_priority(&self) -> i8 {
-        let index = PRIORITIES
+    fn shared_item_priority(&self) -> i16 {
+        PRIORITIES
             .iter()
             .position(|&c| c == self.shared_item)
-            .unwrap() as i8;
-
-        index + 1
+            .unwrap() as i16
+            + 1
     }
 }
 
@@ -39,9 +38,13 @@ fn main() -> anyhow::Result<()> {
         rucksacks.push(Rucksack::from(line));
     }
 
-    for rucksack in rucksacks {
-        println!("{}", rucksack.shared_item_priority());
-    }
+    println!(
+        "{}",
+        rucksacks
+            .iter()
+            .map(|rucksack| rucksack.shared_item_priority())
+            .sum::<i16>()
+    );
 
     Ok(())
 }
